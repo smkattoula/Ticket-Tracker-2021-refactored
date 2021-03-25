@@ -43,7 +43,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { subject, category, priority, description, status, date } = req.body;
+    const { subject, category, priority, description, status } = req.body;
 
     const newTicket = new Ticket({
       subject: subject,
