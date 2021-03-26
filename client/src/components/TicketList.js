@@ -1,8 +1,26 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Table, Container } from "react-bootstrap";
+import { Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const TicketList = () => {
+  const [tickets, setTickets] = useState([]);
+
+  const getAllTickets = async () => {
+    try {
+      const response = await axios.get("/api/tickets");
+
+      const data = await response.data;
+      setTickets(data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getAllTickets();
+  }, []);
+
   return (
     <Fragment>
       <h1 className="text-center mt-4">My Tickets</h1>
@@ -15,22 +33,30 @@ const TicketList = () => {
             <th>Description</th>
             <th>Status</th>
             <th>Date</th>
+            <th>Edit</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Website</td>
-            <td>Medium</td>
-            <td>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste sit
-              commodi blanditiis explicabo ut minus. Dolorum enim eveniet iste
-              odio dolor, ex reprehenderit? Facere ea quisquam ipsum consectetur
-              eius unde.
-            </td>
-            <td>Open</td>
-            <td>03-25-2021</td>
-          </tr>
+          {tickets &&
+            tickets.map((ticket) => (
+              <tr key={ticket._id}>
+                <td>{ticket.subject}</td>
+                <td>{ticket.category}</td>
+                <td>{ticket.priority}</td>
+                <td>{ticket.description}</td>
+                <td>{ticket.status}</td>
+                <td>{ticket.date.substring(0, 10)}</td>
+                <td>
+                  <Link to={`/edit/${ticket._id}`}>
+                    <button className="btn btn-success">Edit</button>
+                  </Link>
+                </td>
+                <td>
+                  <button className="btn btn-danger">Delete</button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </Table>
     </Fragment>
