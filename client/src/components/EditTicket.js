@@ -9,7 +9,6 @@ const EditTicket = ({ match }) => {
   const [priority, setPriority] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
-  const [show, setShow] = useState(false);
 
   let history = useHistory();
 
@@ -50,15 +49,6 @@ const EditTicket = ({ match }) => {
 
       const config = { headers: { "Content-Type": "application/json" } };
 
-      if (
-        subject === "" ||
-        category === "" ||
-        priority === "" ||
-        description === ""
-      ) {
-        setShow(true);
-      }
-
       const response = await axios.put(
         `/api/tickets/update/${match.params.id}`,
         ticket,
@@ -75,12 +65,6 @@ const EditTicket = ({ match }) => {
     <Fragment>
       <Form onSubmit={handleSubmit}>
         <h1 className="text-center mt-4">Edit Ticket</h1>
-        {show && (
-          <Alert variant="danger" onClose={() => setShow(false)} dismissible>
-            <Alert.Heading>All fields are required</Alert.Heading>
-            <p>Please enter all fields</p>
-          </Alert>
-        )}
         <Form.Group>
           <Form.Label>Subject</Form.Label>
           <Form.Control
