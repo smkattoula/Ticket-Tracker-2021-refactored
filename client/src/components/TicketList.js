@@ -1,10 +1,15 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, useContext, Fragment } from "react";
 import { Table, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+import AuthContext from "../context/auth/AuthContext";
+
 const TicketList = () => {
   const [tickets, setTickets] = useState([]);
+
+  const authContext = useContext(AuthContext);
+  const { loadUser } = authContext;
 
   const getAllTickets = async () => {
     try {
@@ -18,14 +23,16 @@ const TicketList = () => {
   };
 
   useEffect(() => {
+    loadUser();
     getAllTickets();
+    // eslint-disable-next-line
   }, []);
 
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(`/api/tickets/${id}`);
 
-      const data = await response.data;
+      await response.data;
       setTickets(tickets.filter((ticket) => ticket._id !== id));
     } catch (error) {
       console.error(error.message);

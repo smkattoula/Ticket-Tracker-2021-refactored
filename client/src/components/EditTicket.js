@@ -1,7 +1,9 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import axios from "axios";
+
+import AuthContext from "../context/auth/AuthContext";
 
 const EditTicket = ({ match }) => {
   const [subject, setSubject] = useState("");
@@ -9,6 +11,9 @@ const EditTicket = ({ match }) => {
   const [priority, setPriority] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
+
+  const authContext = useContext(AuthContext);
+  const { loadUser } = authContext;
 
   let history = useHistory();
 
@@ -31,7 +36,9 @@ const EditTicket = ({ match }) => {
   };
 
   useEffect(() => {
+    loadUser();
     getSingleTicket();
+    // eslint-disable-next-line
   }, []);
 
   const handleSubmit = async (e) => {
@@ -54,7 +61,8 @@ const EditTicket = ({ match }) => {
         ticket,
         config
       );
-      const data = await response.data;
+
+      await response.data;
       history.push("/list");
     } catch (error) {
       console.error(error.messsage);

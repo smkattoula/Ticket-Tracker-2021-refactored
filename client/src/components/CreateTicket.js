@@ -1,7 +1,9 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Form, Button, Alert } from "react-bootstrap";
 import axios from "axios";
+
+import AuthContext from "../context/auth/AuthContext";
 
 const CreateTicket = () => {
   const [subject, setSubject] = useState("");
@@ -9,6 +11,9 @@ const CreateTicket = () => {
   const [priority, setPriority] = useState("");
   const [description, setDescription] = useState("");
   const [show, setShow] = useState(false);
+
+  const authContext = useContext(AuthContext);
+  const { loadUser } = authContext;
 
   let history = useHistory();
 
@@ -42,6 +47,11 @@ const CreateTicket = () => {
       console.error(error.messsage);
     }
   };
+
+  useEffect(() => {
+    loadUser();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Fragment>

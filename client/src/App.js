@@ -5,23 +5,36 @@ import AppNavBar from "./components/AppNavBar";
 import CreateTicket from "./components/CreateTicket";
 import EditTicket from "./components/EditTicket";
 import TicketList from "./components/TicketList";
-
+import Register from "./components/Register";
+import Login from "./components/Login";
+import setAuthToken from "./utils/setAuthToken";
+import PrivateRoute from "./components/PrivateRoute";
 import "./App.css";
+
+import AuthState from "./context/auth/AuthState";
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
   return (
-    <Fragment>
-      <Router>
-        <AppNavBar />
-        <Container>
-          <Switch>
-            <Route exact path="/create" component={CreateTicket} />
-            <Route exact path="/edit/:id" component={EditTicket} />
-            <Route exact path="/list" component={TicketList} />
-          </Switch>
-        </Container>
-      </Router>
-    </Fragment>
+    <AuthState>
+      <Fragment>
+        <Router>
+          <AppNavBar />
+          <Container>
+            <Switch>
+              <PrivateRoute exact path="/create" component={CreateTicket} />
+              <PrivateRoute exact path="/edit/:id" component={EditTicket} />
+              <PrivateRoute exact path="/list" component={TicketList} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+            </Switch>
+          </Container>
+        </Router>
+      </Fragment>
+    </AuthState>
   );
 };
 

@@ -1,15 +1,16 @@
 const express = require("express");
+const auth = require("../../middleware/auth");
 const router = express.Router();
 
 const Ticket = require("../../models/Ticket");
 
 // Route: GET api/tickets
 // Description: Get all tickets
-// Access: Public
+// Access: Private
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
-    const tickets = await Ticket.find({}).sort({ date: -1 });
+    const tickets = await Ticket.find({ user: req.user.id }).sort({ date: -1 });
 
     res.json(tickets);
   } catch (error) {
@@ -20,9 +21,9 @@ router.get("/", async (req, res) => {
 
 // Route: GET api/tickets/:id
 // Description: Get a single ticket
-// Access: Public
+// Access: Private
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   try {
     const ticket = await Ticket.findById(req.params.id);
 
@@ -39,13 +40,14 @@ router.get("/:id", async (req, res) => {
 
 // Route: POST api/tickets
 // Description: Create a new ticket
-// Access: Public
+// Access: Private
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   try {
     const { subject, category, priority, description, status } = req.body;
 
     const newTicket = new Ticket({
+      user: req.user.id,
       subject: subject,
       category: category,
       priority: priority,
@@ -69,9 +71,9 @@ router.post("/", async (req, res) => {
 
 // Route: UPDATE api/tickets/update/:id
 // Description: Update an existing ticket
-// Access: Public
+// Access: Private
 
-router.put("/update/:id", async (req, res) => {
+router.put("/update/:id", auth, async (req, res) => {
   try {
     const ticket = await Ticket.findById(req.params.id);
 
@@ -94,14 +96,19 @@ router.put("/update/:id", async (req, res) => {
 
 // Route: DELETE api/tickets/:id
 // Description: Delete an existing ticket
-// Access: Public
+// Access: Private
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     const ticket = await Ticket.findById(req.params.id);
 
     if (!ticket) {
       return res.status(404).json({ message: "Ticket no longer exists" });
+    }
+
+    // Validation to check if movie in watchlist belongs to user
+    if (ticket.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "Not authorized" });
     }
 
     const deleteTicket = await Ticket.findByIdAndRemove(req.params.id);
