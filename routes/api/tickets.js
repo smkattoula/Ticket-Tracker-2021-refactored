@@ -44,7 +44,7 @@ router.get("/:id", auth, async (req, res) => {
 
 router.post("/", auth, async (req, res) => {
   try {
-    const { subject, category, priority, description, status } = req.body;
+    const { subject, category, priority, description, status, date } = req.body;
 
     const newTicket = new Ticket({
       user: req.user.id,
@@ -53,6 +53,7 @@ router.post("/", auth, async (req, res) => {
       priority: priority,
       description: description,
       status: status,
+      date: date,
     });
 
     if (!newTicket) {

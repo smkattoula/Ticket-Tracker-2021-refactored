@@ -65,7 +65,9 @@ const TicketList = () => {
                   <td>{ticket.priority}</td>
                   <td>{ticket.description}</td>
                   <td>{ticket.status}</td>
-                  <td>{ticket.date.substring(0, 10)}</td>
+                  <td style={{ width: "10rem" }}>
+                    {ticket.date.substring(0, 10)}
+                  </td>
                   <td>
                     <Link to={`/edit/${ticket._id}`}>
                       <button className="btn btn-success">Edit</button>

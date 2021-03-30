@@ -1,8 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Form, FormGroup, Container, Alert, Button } from "react-bootstrap";
 import AuthContext from "../context/auth/AuthContext";
 
-const Register = ({ history }) => {
+const Register = () => {
+  const [alert, setAlert] = useState("");
+
   const authContext = useContext(AuthContext);
 
   const {
@@ -13,7 +16,7 @@ const Register = ({ history }) => {
     loadUser,
   } = authContext;
 
-  const [alert, setAlert] = useState("");
+  let history = useHistory();
 
   useEffect(() => {
     loadUser();
@@ -23,14 +26,14 @@ const Register = ({ history }) => {
     }
 
     if (error === "User already exists") {
-      setAlert(<Alert color="danger">User already exists</Alert>);
+      setAlert(<Alert variant="danger">User already exists</Alert>);
       setTimeout(() => {
         setAlert();
         clearErrors();
       }, 5000);
     }
     // eslint-disable-next-line
-  }, [error, isAuthenticated, history]);
+  }, [error, isAuthenticated]);
 
   const [user, setUser] = useState({
     name: "",
@@ -46,12 +49,12 @@ const Register = ({ history }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (name === "" || email === "" || password === "") {
-      setAlert(<Alert color="danger">Please enter all fields</Alert>);
+      setAlert(<Alert variant="danger">Please enter all fields</Alert>);
       setTimeout(() => {
         setAlert();
       }, 5000);
     } else if (password !== password2) {
-      setAlert(<Alert color="danger">Passwords do not match</Alert>);
+      setAlert(<Alert variant="danger">Passwords do not match</Alert>);
       setTimeout(() => {
         setAlert();
       }, 5000);

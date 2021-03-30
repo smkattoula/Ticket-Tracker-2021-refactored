@@ -20,7 +20,7 @@ const Login = () => {
     }
 
     if (error === "Invalid Credentials") {
-      setAlert(<Alert color="danger">Invalid Credentials</Alert>);
+      setAlert(<Alert variant="danger">Invalid Credentials</Alert>);
       setTimeout(() => {
         setAlert();
         clearErrors();

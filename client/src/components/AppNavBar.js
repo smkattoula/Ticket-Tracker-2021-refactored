@@ -18,7 +18,7 @@ const AppNavBar = () => {
         Hello, {user && user.name}!
       </Nav.Link>
       <Nav.Item>
-        <Nav.Link className="navbar-link" href="/list">
+        <Nav.Link className="navbar-link" href="/">
           My Tickets
         </Nav.Link>
       </Nav.Item>

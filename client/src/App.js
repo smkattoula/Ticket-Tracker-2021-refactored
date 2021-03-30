@@ -25,9 +25,9 @@ const App = () => {
           <AppNavBar />
           <Container>
             <Switch>
+              <PrivateRoute exact path="/" component={TicketList} />
               <PrivateRoute exact path="/create" component={CreateTicket} />
               <PrivateRoute exact path="/edit/:id" component={EditTicket} />
-              <PrivateRoute exact path="/list" component={TicketList} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
             </Switch>

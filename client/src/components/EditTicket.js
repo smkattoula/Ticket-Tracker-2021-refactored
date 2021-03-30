@@ -11,6 +11,17 @@ const EditTicket = ({ match }) => {
   const [priority, setPriority] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
+  const [toggle, setToggle] = useState(true);
+
+  const checkBoxToggle = (e) => {
+    setToggle(!toggle);
+    if (toggle === false) {
+      setStatus("Closed");
+    } else {
+      setStatus("Open");
+    }
+    console.log(toggle);
+  };
 
   const authContext = useContext(AuthContext);
   const { loadUser } = authContext;
@@ -63,7 +74,7 @@ const EditTicket = ({ match }) => {
       );
 
       await response.data;
-      history.push("/list");
+      history.push("/");
     } catch (error) {
       console.error(error.messsage);
     }
@@ -122,12 +133,24 @@ const EditTicket = ({ match }) => {
         </Form.Group>
         <Form.Group>
           <Form.Label>Status</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter status..."
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          />
+          {["checkbox"].map((type) => (
+            <div key={`inline-${type}`} className="mb-3">
+              <Form.Check
+                inline
+                label="Open"
+                value={status}
+                onClick={checkBoxToggle}
+                type={type}
+                id={`inline-${type}-1`}
+              />
+              <Form.Check
+                inline
+                label="Closed"
+                type={type}
+                id={`inline-${type}-2`}
+              />
+            </div>
+          ))}
         </Form.Group>
         <Button className="btn btn-block" type="submit">
           Submit
