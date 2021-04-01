@@ -41,8 +41,9 @@ const CreateTicket = () => {
       }
 
       const response = await axios.post("/api/tickets", ticket, config);
-      const data = await response.data;
-      console.log(data);
+
+      await response.data;
+
       history.push("/");
     } catch (error) {
       console.error(error.messsage);

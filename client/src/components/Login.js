@@ -5,6 +5,12 @@ import AuthContext from "../context/auth/AuthContext";
 
 const Login = () => {
   const [alert, setAlert] = useState("");
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const { email, password } = user;
 
   const authContext = useContext(AuthContext);
 
@@ -29,13 +35,6 @@ const Login = () => {
     // eslint-disable-next-line
   }, [error, isAuthenticated]);
 
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-
-  const { email, password } = user;
-
   const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
 
   const onSubmit = (e) => {
@@ -50,12 +49,12 @@ const Login = () => {
   return (
     <Container>
       <h1 className="text-center mt-3">
-        Account <span className="text-info">Login</span>
+        Account <span className="text-primary">Login</span>
       </h1>
       {alert}
       <Form onSubmit={onSubmit}>
         <FormGroup>
-          <Form.Label for="email">Email</Form.Label>
+          <Form.Label htmlFor="email">Email</Form.Label>
           <Form.Control
             type="email"
             name="email"
@@ -66,7 +65,7 @@ const Login = () => {
           />
         </FormGroup>
         <FormGroup>
-          <Form.Label for="password">Password</Form.Label>
+          <Form.Label htmlFor="password">Password</Form.Label>
           <Form.Control
             type="password"
             name="password"

@@ -13,20 +13,63 @@ const EditTicket = ({ match }) => {
   const [status, setStatus] = useState("");
   const [toggle, setToggle] = useState(true);
 
-  const checkBoxToggle = (e) => {
-    setToggle(!toggle);
-    if (toggle === false) {
-      setStatus("Closed");
-    } else {
-      setStatus("Open");
-    }
-    console.log(toggle);
-  };
-
   const authContext = useContext(AuthContext);
   const { loadUser } = authContext;
 
   let history = useHistory();
+
+  const checkBoxToggle = () => {
+    setToggle(!toggle);
+    if (status === "Open") {
+      setStatus("Closed");
+    } else {
+      setStatus("Open");
+    }
+  };
+
+  const openTicketChecked = (
+    <Fragment>
+      <Form.Check
+        inline
+        label="Open"
+        defaultChecked
+        value={status}
+        onClick={checkBoxToggle}
+        type="checkbox"
+        id="1"
+      />
+      <Form.Check
+        inline
+        label="Closed"
+        type="checkbox"
+        value={status}
+        onClick={checkBoxToggle}
+        id="2"
+      />
+    </Fragment>
+  );
+
+  const closedTicketChecked = (
+    <Fragment>
+      <Form.Check
+        inline
+        label="Open"
+        value={status}
+        onClick={checkBoxToggle}
+        type="checkbox"
+        id="1"
+      />
+      <Form.Check
+        inline
+        label="Closed"
+        defaultChecked
+        type="checkbox"
+        value={status}
+        onClick={checkBoxToggle}
+        id="2"
+      />
+    </Fragment>
+  );
 
   const getSingleTicket = async () => {
     try {
@@ -135,20 +178,8 @@ const EditTicket = ({ match }) => {
           <Form.Label>Status</Form.Label>
           {["checkbox"].map((type) => (
             <div key={`inline-${type}`} className="mb-3">
-              <Form.Check
-                inline
-                label="Open"
-                value={status}
-                onClick={checkBoxToggle}
-                type={type}
-                id={`inline-${type}-1`}
-              />
-              <Form.Check
-                inline
-                label="Closed"
-                type={type}
-                id={`inline-${type}-2`}
-              />
+              {status === "Open" && openTicketChecked}
+              {status === "Closed" && closedTicketChecked}
             </div>
           ))}
         </Form.Group>

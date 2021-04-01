@@ -1,0 +1,4 @@
+{
+  "MONGO_URI": "mongodb+srv://smkattoula:Whitelink643_@tickettracker2021.ajmgz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "JWT_SECRET": "secret"
+}

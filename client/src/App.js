@@ -9,6 +9,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import setAuthToken from "./utils/setAuthToken";
 import PrivateRoute from "./components/PrivateRoute";
+import NotFound from "./components/NotFound";
 import "./App.css";
 
 import AuthState from "./context/auth/AuthState";
@@ -30,6 +31,7 @@ const App = () => {
               <PrivateRoute exact path="/edit/:id" component={EditTicket} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route component={NotFound} />
             </Switch>
           </Container>
         </Router>

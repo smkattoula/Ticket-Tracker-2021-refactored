@@ -5,6 +5,14 @@ import AuthContext from "../context/auth/AuthContext";
 
 const Register = () => {
   const [alert, setAlert] = useState("");
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    password2: "",
+  });
+
+  const { name, email, password, password2 } = user;
 
   const authContext = useContext(AuthContext);
 
@@ -35,15 +43,6 @@ const Register = () => {
     // eslint-disable-next-line
   }, [error, isAuthenticated]);
 
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-    password2: "",
-  });
-
-  const { name, email, password, password2 } = user;
-
   const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
 
   const onSubmit = (e) => {
@@ -66,12 +65,12 @@ const Register = () => {
   return (
     <Container>
       <h1 className="text-center mt-3">
-        Account <span className="text-info">Register</span>
+        Account <span className="text-primary">Registration</span>
       </h1>
       {alert}
       <Form onSubmit={onSubmit}>
         <FormGroup>
-          <Form.Label for="name">Name</Form.Label>
+          <Form.Label htmlFor="name">Name</Form.Label>
           <Form.Control
             type="text"
             name="name"
@@ -82,7 +81,7 @@ const Register = () => {
           />
         </FormGroup>
         <FormGroup>
-          <Form.Label for="email">Email</Form.Label>
+          <Form.Label htmlFor="email">Email</Form.Label>
           <Form.Control
             type="email"
             name="email"
@@ -93,7 +92,7 @@ const Register = () => {
           />
         </FormGroup>
         <FormGroup>
-          <Form.Label for="password">Password</Form.Label>
+          <Form.Label htmlFor="password">Password</Form.Label>
           <Form.Control
             type="password"
             name="password"
@@ -105,7 +104,7 @@ const Register = () => {
           />
         </FormGroup>
         <FormGroup>
-          <Form.Label for="password2">Confirm Password</Form.Label>
+          <Form.Label htmlFor="password2">Confirm Password</Form.Label>
           <Form.Control
             type="password"
             name="password2"

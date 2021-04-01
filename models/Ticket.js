@@ -10,6 +10,7 @@ const TicketSchema = new Schema({
   subject: {
     type: String,
     required: true,
+    trim: true,
   },
   category: {
     type: String,
@@ -22,6 +23,7 @@ const TicketSchema = new Schema({
   description: {
     type: String,
     required: true,
+    trim: true,
   },
   status: {
     type: String,
