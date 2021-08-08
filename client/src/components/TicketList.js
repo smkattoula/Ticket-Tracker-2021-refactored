@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, Fragment } from "react";
-import { Table, Alert, Spinner } from "react-bootstrap";
+import { Table, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -40,11 +40,6 @@ const TicketList = () => {
 
   return (
     <Fragment>
-      {loading && (
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      )}
       <h1 className="text-center mt-4">My Tickets</h1>
       {tickets && tickets.length > 0 ? (
         <Table className="mt-4" striped bordered hover>
