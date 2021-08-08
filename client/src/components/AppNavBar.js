@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from "react";
+import { LinkContainer } from "react-router-bootstrap";
 import { Navbar, Nav } from "react-bootstrap";
 
 import AuthContext from "../context/auth/AuthContext";
@@ -17,34 +18,30 @@ const AppNavBar = () => {
       <Nav.Link style={{ color: "white" }}>
         Hello, {user && user.name}!
       </Nav.Link>
-      <Nav.Item>
-        <Nav.Link className="navbar-link" href="/">
-          My Tickets
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link href="/create">Create Ticket</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link className="navbar-link" onClick={onLogout} href="/">
-          <i className="fas fa-sign-out-alt fa-sm"></i> <span>Logout</span>
-        </Nav.Link>
-      </Nav.Item>
+
+      <LinkContainer to="/">
+        <Nav.Link className="navbar-link">My Tickets</Nav.Link>
+      </LinkContainer>
+
+      <LinkContainer to="/create">
+        <Nav.Link>Create Ticket</Nav.Link>
+      </LinkContainer>
+
+      <Nav.Link className="navbar-link" onClick={onLogout} href="/login">
+        <i className="fas fa-sign-out-alt fa-sm"></i> <span>Logout</span>
+      </Nav.Link>
     </Fragment>
   );
 
   const guestLinks = (
     <Fragment>
-      <Nav.Item>
-        <Nav.Link className="navbar-link" href="/register">
-          Register
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link className="navbar-link" href="/login">
-          Login
-        </Nav.Link>
-      </Nav.Item>
+      <LinkContainer to="/register">
+        <Nav.Link className="navbar-link">Register</Nav.Link>
+      </LinkContainer>
+
+      <LinkContainer to="/login">
+        <Nav.Link className="navbar-link">Login</Nav.Link>
+      </LinkContainer>
     </Fragment>
   );
 
@@ -57,7 +54,9 @@ const AppNavBar = () => {
         variant="dark"
         className="appNavBar"
       >
-        <Navbar.Brand href="/">Ticket Tracker</Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand>Ticket Tracker</Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto">
