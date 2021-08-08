@@ -9,7 +9,7 @@ const TicketList = () => {
   const [tickets, setTickets] = useState([]);
 
   const authContext = useContext(AuthContext);
-  const { loadUser, loading } = authContext;
+  const { loadUser } = authContext;
 
   const getAllTickets = async () => {
     try {
